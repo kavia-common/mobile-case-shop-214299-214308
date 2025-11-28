@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 /**
  * PUBLIC_INTERFACE
  * Checkout
- * Simulated checkout form that posts to API.
+ * Simulated checkout form that posts to API, with improved accessibility.
  */
 export default function Checkout() {
   const { items, total, clear } = useCart();
@@ -37,7 +37,7 @@ export default function Checkout() {
 
   if (status === 'success') {
     return (
-      <div className="card" style={{ padding: 24 }}>
+      <div className="card" style={{ padding: 24 }} role="status" aria-live="polite">
         <div style={{ fontSize: 18, fontWeight: 800 }}>Thank you!</div>
         <div className="space" />
         <div className="muted">Your order has been created.</div>
@@ -49,19 +49,21 @@ export default function Checkout() {
   }
 
   return (
-    <form className="grid" onSubmit={submit}>
+    <form className="grid" onSubmit={submit} aria-label="Checkout form">
       <div className="card" style={{ gridColumn: 'span 8', padding: 16, display: 'grid', gap: 12 }}>
         <div style={{ fontWeight: 800, fontSize: 18 }}>Contact</div>
-        <input className="input" placeholder="Email address" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+        <label htmlFor="email" className="muted">Email address</label>
+        <input id="email" className="input" placeholder="you@example.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
         <div style={{ fontWeight: 800, fontSize: 18 }}>Shipping Address</div>
-        <textarea className="input" placeholder="Address" rows={4} value={address} onChange={e => setAddress(e.target.value)} required />
+        <label htmlFor="address" className="muted">Address</label>
+        <textarea id="address" className="input" placeholder="Address" rows={4} value={address} onChange={e => setAddress(e.target.value)} required />
       </div>
       <div className="card" style={{ gridColumn: 'span 4', padding: 16, height: 'fit-content', display: 'grid', gap: 12 }}>
         <div style={{ fontWeight: 800, fontSize: 18 }}>Order Summary</div>
         <div className="muted">Items: {items.length}</div>
-        <div className="price">Total: ${total.toFixed(2)}</div>
-        <button className="btn primary" type="submit" disabled={disabled}>Pay Now</button>
-        {status === 'error' && <div style={{ color: 'var(--color-error)' }}>An error occurred: {result?.error}</div>}
+        <div className="price" aria-label={`Total ${total.toFixed(2)} dollars`}>Total: ${total.toFixed(2)}</div>
+        <button className="btn primary" type="submit" disabled={disabled} aria-disabled={disabled}>Pay Now</button>
+        {status === 'error' && <div style={{ color: 'var(--color-error)' }} role="alert">An error occurred: {result?.error}</div>}
       </div>
     </form>
   );

@@ -13,8 +13,8 @@ export default function Home() {
         <div style={{ fontWeight: 900, fontSize: 28 }}>Protect in Style</div>
         <div className="muted">Premium mobile cases with ocean-blue finesse and amber accents. Durable. Sleek. Made for your device.</div>
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
-          <Link className="btn primary" to="/products">Shop Cases</Link>
-          <a className="btn" href="#learn">Learn More</a>
+          <Link className="btn primary" to="/products" aria-label="Shop mobile cases">Shop Cases</Link>
+          <a className="btn" href="#learn" aria-label="Learn more about CaseWave">Learn More</a>
         </div>
       </div>
       <div className="space" />
